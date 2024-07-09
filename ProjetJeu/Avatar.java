@@ -46,26 +46,6 @@ public class Avatar {
         }
     }
 
-    public static Avatar chargerAvatar(String nom) throws IOException {
-        File fichier = new File("Avatars.csv");
-        if (!fichier.exists()) {
-            fichier.createNewFile();
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(fichier))) {
-            String ligne;
-            while ((ligne = reader.readLine()) != null) {
-                String[] parties = ligne.split(",");
-                if (parties[1].equals(nom)) {
-                    int id = Integer.parseInt(parties[0]);
-                    int pointsDeVie = Integer.parseInt(parties[2]);
-                    return new Avatar(id, nom, pointsDeVie);
-                }
-            }
-        }
-        return null;
-    }
-
     public static List<Avatar> chargerAvatars() throws IOException {
         List<Avatar> avatars = new ArrayList<>();
         File fichier = new File("Avatars.csv");
@@ -87,8 +67,8 @@ public class Avatar {
     }
 
     public static Avatar creerNouvelAvatar(int id, String nom) {
+        
         Scanner scanner = new Scanner(System.in);
-
         System.out.print("Entrez le nombre de notes : ");
         int nombreNotes = scanner.nextInt();
         int[] notes = new int[nombreNotes];
@@ -96,6 +76,7 @@ public class Avatar {
             System.out.print("Entrez la note " + (i + 1) + " : ");
             notes[i] = scanner.nextInt();
         }
+        
 
         Avatar avatar = new Avatar(id, nom);
         avatar.pointsDeVie = avatar.calculerPointsDeVie(notes); // Calculer et attribuer les points de vie après la création
@@ -107,7 +88,6 @@ public class Avatar {
             e.printStackTrace();
         }
 
-        scanner.close(); // Fermeture du scanner pour éviter les fuites de ressources
         return avatar;
     }
 
