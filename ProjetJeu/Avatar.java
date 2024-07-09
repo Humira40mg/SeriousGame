@@ -86,16 +86,35 @@ public class Avatar {
     }
 
     public static Avatar creerNouvelAvatar(int id, String nom) {
-        
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Entrez le nombre de notes : ");
-        int nombreNotes = scanner.nextInt();
-        int[] notes = new int[nombreNotes];
-        for (int i = 0; i < nombreNotes; i++) {
-            System.out.print("Entrez la note " + (i + 1) + " : ");
-            notes[i] = scanner.nextInt();
+        int nombreNotes = 0;
+        int[] notes = null;
+
+        while (true) {
+            try {
+                System.out.print("Entrez le nombre de notes : ");
+                nombreNotes = Integer.parseInt(scanner.nextLine()); // Utiliser nextLine pour éviter les problèmes de lecture
+                if (nombreNotes > 0) {
+                    notes = new int[nombreNotes];
+                    break;
+                } else {
+                    System.out.println("Veuillez entrer un nombre positif.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Veuillez entrer un nombre valide.");
+            }
         }
-        
+        for (int i = 0; i < nombreNotes; i++) {
+            while (true) {
+                try {
+                    System.out.print("Entrez la note " + (i + 1) + " : ");
+                    notes[i] = Integer.parseInt(scanner.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Veuillez entrer une note valide.");
+                }
+            }
+        }
 
         Avatar avatar = new Avatar(id, nom);
         avatar.pointsDeVie = avatar.calculerPointsDeVie(notes); // Calculer et attribuer les points de vie après la création
@@ -109,6 +128,7 @@ public class Avatar {
 
         return avatar;
     }
+
 
     // Getters et Setters
     public int getId() {
