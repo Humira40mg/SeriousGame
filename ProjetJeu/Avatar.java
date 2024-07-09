@@ -29,6 +29,14 @@ public class Avatar {
         this.pointsDeVie += points;
     }
 
+    // Nouvelle méthode pour décrémenter les points de vie
+    public void decrementerPointsDeVie(int points) {
+        this.pointsDeVie -= points;
+        if (this.pointsDeVie < 0) {
+            this.pointsDeVie = 0; // S'assurer que les points de vie ne deviennent pas négatifs
+        }
+    }
+
     public void sauvegarderAvatar() throws IOException {
         File fichier = new File("Avatars.csv");
         if (!fichier.exists()) {

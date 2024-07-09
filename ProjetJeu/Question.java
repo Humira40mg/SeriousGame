@@ -7,7 +7,7 @@ public class Question {
     private String enonce;
     private String reponse;
     private int points;
-    private boolean disponible; // Nouvelle propriété pour indiquer la disponibilité de la question
+    private boolean disponible;
 
     public Question(String enonce, String reponse, int points, boolean disponible) {
         this.enonce = enonce;
@@ -36,6 +36,10 @@ public class Question {
         this.disponible = disponible;
     }
 
+    public void setReponse(String reponse) {
+        this.reponse = reponse;
+    }
+
     public static Question creerNouvelleQuestion(Scanner scanner) {
         System.out.print("Entrez l'énoncé de la question : ");
         String enonce = scanner.nextLine();
@@ -45,9 +49,8 @@ public class Question {
 
         System.out.print("Entrez le nombre de points pour cette question : ");
         int points = scanner.nextInt();
-        scanner.nextLine(); // Consommer le newline
+        scanner.nextLine();
 
-        // Création de la nouvelle question avec disponibilité par défaut à true
         Question nouvelleQuestion = new Question(enonce, reponse, points, true);
 
         try {
@@ -61,7 +64,7 @@ public class Question {
     }
 
     public static void ajouterQuestion(Question question) throws IOException {
-        verifierFichierQuestions(); // Vérifier et créer le fichier Questions.csv si nécessaire
+        verifierFichierQuestions();
 
         File fichier = new File("Questions.csv");
         try (FileWriter writer = new FileWriter(fichier, true)) {
@@ -77,14 +80,14 @@ public class Question {
         File fichier = new File("Questions.csv");
         if (!fichier.exists()) {
             System.out.println("Le fichier Questions.csv n'existe pas.");
-            return questions; // Retourner une liste vide si le fichier n'existe pas
+            return questions;
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fichier))) {
             String ligne;
             while ((ligne = reader.readLine()) != null) {
                 String[] parties = ligne.split(",");
-                if (parties.length == 4) { // Vérifier s'il y a 4 parties (enonce, reponse, points, disponible)
+                if (parties.length == 4) {
                     String enonce = parties[0];
                     String reponse = parties[1];
                     int points = Integer.parseInt(parties[2]);
@@ -101,7 +104,7 @@ public class Question {
     private static void verifierFichierQuestions() {
         String nomFichier = "Questions.csv";
         File fichier = new File(nomFichier);
-        
+
         try {
             if (!fichier.exists()) {
                 boolean fichierCree = fichier.createNewFile();
@@ -113,22 +116,23 @@ public class Question {
             }
         } catch (IOException e) {
             System.out.println("Erreur lors de la création du fichier " + nomFichier + " : " + e.getMessage());
-            // Vous pouvez gérer l'exception ici selon vos besoins, par exemple, en lançant une exception plus spécifique ou en journalisant l'erreur.
         }
     }
+
+    public static void initialiserFichierQuestions() {
+        verifierFichierQuestions();
+    }
+
     public static void main(String[] args) {
         try {
             Scanner reader = new Scanner(new File("Questions.csv"));
-        }
-        catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             try {
-            PrintWriter writer = new PrintWriter("Questions.csv","UTF-8");
-            writer.close();
-            }
-            catch(Exception a){
+                PrintWriter writer = new PrintWriter("Questions.csv", "UTF-8");
+                writer.close();
+            } catch (Exception a) {
                 System.out.println("Error : File Not Found");
             }
         }
     }
-
 }
