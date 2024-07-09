@@ -45,6 +45,25 @@ public class Avatar {
             writer.append("\n");
         }
     }
+    public static Avatar chargerAvatar(String nom) throws IOException {
+        File fichier = new File("Avatars.csv");
+        if (!fichier.exists()) {
+            fichier.createNewFile();
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fichier))) {
+            String ligne;
+            while ((ligne = reader.readLine()) != null) {
+                String[] parties = ligne.split(",");
+                if (parties[1].equals(nom)) {
+                    int id = Integer.parseInt(parties[0]);
+                    int pointsDeVie = Integer.parseInt(parties[2]);
+                    return new Avatar(id, nom, pointsDeVie);
+                }
+            }
+        }
+        return null;
+    }
 
     public static List<Avatar> chargerAvatars() throws IOException {
         List<Avatar> avatars = new ArrayList<>();
