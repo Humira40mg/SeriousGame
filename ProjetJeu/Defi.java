@@ -32,7 +32,7 @@ public class Defi {
         return question;
     }
 
-    public void setReponse(String reponse) {
+    public void setReponse(List<String> reponse) {
         this.question.setReponse(reponse);
     }
 
@@ -67,7 +67,7 @@ public class Defi {
                 String initiateurNom = donnees[1];
                 String adversaireNom = donnees[2];
                 String enonce = donnees[3];
-                String reponse = donnees[4];
+                List<String> reponse = donnees[4];
                 int points = Integer.parseInt(donnees[5]);
 
                 Avatar initiateur = Avatar.chargerAvatar(initiateurNom);

@@ -1,15 +1,16 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Question {
     private String enonce;
-    private String reponse;
+    private List<String> reponse = new ArrayList<>();
     private int points;
     private boolean disponible;
 
-    public Question(String enonce, String reponse, int points, boolean disponible) {
+    public Question(String enonce, List<String> reponse, int points, boolean disponible) {
         this.enonce = enonce;
         this.reponse = reponse;
         this.points = points;
@@ -21,7 +22,8 @@ public class Question {
     }
 
     public String getReponse() {
-        return reponse;
+        String blokquestion = String.join(";", reponse);
+        return blokquestion;
     }
 
     public int getPoints() {
@@ -36,7 +38,7 @@ public class Question {
         this.disponible = disponible;
     }
 
-    public void setReponse(String reponse) {
+    public void setReponse(List<String> reponse) {
         this.reponse = reponse;
     }
 
@@ -44,14 +46,17 @@ public class Question {
         System.out.print("Entrez l'énoncé de la question : ");
         String enonce = scanner.nextLine();
 
-        System.out.print("Entrez la réponse de la question : ");
-        String reponse = scanner.nextLine();
+        List<String> reponses = new ArrayList<>();
+        for (int i = 0; i == 3; i++){
+            System.out.print("Entrez la réponse "+ (i++) +" de la question : ");
+            reponses.add(scanner.nextLine());
+        }
 
         System.out.print("Entrez le nombre de points pour cette question : ");
         int points = scanner.nextInt();
         scanner.nextLine();
 
-        Question nouvelleQuestion = new Question(enonce, reponse, points, true);
+        Question nouvelleQuestion = new Question(enonce, reponses, points, true);
 
         try {
             ajouterQuestion(nouvelleQuestion);
@@ -89,10 +94,11 @@ public class Question {
                 String[] parties = ligne.split(",");
                 if (parties.length == 4) {
                     String enonce = parties[0];
-                    String reponse = parties[1];
+                    String[] reponseslu = parties[1].split(";");
+                    List<String> reponses = Arrays.asList(reponseslu);
                     int points = Integer.parseInt(parties[2]);
                     boolean disponible = Boolean.parseBoolean(parties[3]);
-                    questions.add(new Question(enonce, reponse, points, disponible));
+                    questions.add(new Question(enonce, reponses, points, disponible));
                 }
             }
         } catch (IOException e) {
