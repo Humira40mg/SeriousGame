@@ -157,15 +157,13 @@ public class InterfaceUtilisateur {
             if (!avatar.getNom().equals(initiateur.getNom())) {
                 System.out.println((avatars.indexOf(avatar) + 1) + ". " + avatar.getNom());
             }
-        }
-    }
+        }   
+    }   
 
     private static void afficherQuestionsDisponibles(List<Question> questions) {
         System.out.println("Liste des questions disponibles : ");
         for (int i = 0; i < questions.size(); i++) {
-            if (questions.get(i).isDisponible()) {
-                System.out.println((i + 1) + ". " + questions.get(i).getEnonce());
-            }
+            System.out.println((i + 1) + ". " + questions.get(i).getEnonce());
         }
     }
 
@@ -183,7 +181,7 @@ public class InterfaceUtilisateur {
 
         Defi defi = defis.get(choix - 1);
 
-        System.out.print("Entrez votre réponse : ");
+        System.out.print("Entrez le numéro de la réponse réponse : ");
         String reponse = scanner.nextLine();
 
         SeriousGame.repondreDefi(avatar, defi, reponse);

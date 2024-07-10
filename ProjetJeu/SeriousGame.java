@@ -34,7 +34,7 @@ public class SeriousGame {
     }
 
     public static void lancerDefi(Avatar initiateur, Avatar adversaire, Question question) throws IOException {
-        question.setDisponible(false); // Rendre la question indisponible
+        // TO DO: Rendre la question indisponible
 
         int id = defis.size() + 1;
         Defi defi = new Defi(id, initiateur, adversaire, question);

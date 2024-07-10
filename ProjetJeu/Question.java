@@ -8,13 +8,13 @@ public class Question {
     private String enonce;
     private List<String> reponse = new ArrayList<>();
     private int points;
-    private boolean disponible;
+    private int bonnereponse;
 
-    public Question(String enonce, List<String> reponse, int points, boolean disponible) {
+    public Question(String enonce, List<String> reponse, int points, int bonnereponse) {
         this.enonce = enonce;
         this.reponse = reponse;
         this.points = points;
-        this.disponible = disponible;
+        this.bonnereponse = bonnereponse;
     }
 
     public String getEnonce() {
@@ -30,13 +30,10 @@ public class Question {
         return points;
     }
 
-    public boolean isDisponible() {
-        return disponible;
+    public int getBonneReponse() {
+        return bonnereponse;
     }
 
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
 
     public void setReponse(List<String> reponse) {
         this.reponse = reponse;
@@ -52,11 +49,19 @@ public class Question {
             reponses.add(scanner.nextLine());
         }
 
+        int bonnereponse = 5;
+        while (bonnereponse > 4) {
+            System.out.println("Si vous voulez revoir vos réponses tapez 5");
+            System.out.print("Entrez le numéro de la Bonne réponse : ");
+            bonnereponse = scanner.nextInt();
+            scanner.nextLine();
+        }
+
         System.out.print("Entrez le nombre de points pour cette question : ");
         int points = scanner.nextInt();
         scanner.nextLine();
 
-        Question nouvelleQuestion = new Question(enonce, reponses, points, true);
+        Question nouvelleQuestion = new Question(enonce, reponses, points, bonnereponse);
 
         try {
             ajouterQuestion(nouvelleQuestion);
@@ -76,7 +81,7 @@ public class Question {
             writer.append(question.getEnonce()).append(",")
                   .append(question.getReponse()).append(",")
                   .append(Integer.toString(question.getPoints())).append(",")
-                  .append(Boolean.toString(question.isDisponible())).append("\n");
+                  .append(Integer.toString(question.getBonneReponse())).append("\n");
         }
     }
 
@@ -97,8 +102,8 @@ public class Question {
                     String[] reponseslu = parties[1].split(";");
                     List<String> reponses = Arrays.asList(reponseslu);
                     int points = Integer.parseInt(parties[2]);
-                    boolean disponible = Boolean.parseBoolean(parties[3]);
-                    questions.add(new Question(enonce, reponses, points, disponible));
+                    int bonnereponse = Integer.parseInt(parties[3]);
+                    questions.add(new Question(enonce, reponses, points, bonnereponse));
                 }
             }
         } catch (IOException e) {
