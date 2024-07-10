@@ -49,9 +49,8 @@ public class Question {
             reponses.add(scanner.nextLine());
         }
 
-        int bonnereponse = 5;
-        while (bonnereponse > 4) {
-            System.out.println("Si vous voulez revoir vos réponses tapez 5");
+        int bonnereponse = 0;
+        while (bonnereponse != 1 && bonnereponse != 2 && bonnereponse != 3 && bonnereponse != 4) {
             System.out.print("Entrez le numéro de la Bonne réponse : ");
             bonnereponse = scanner.nextInt();
             scanner.nextLine();
